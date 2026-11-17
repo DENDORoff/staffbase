@@ -18,9 +18,14 @@ export const CSV_HEADER = [
   "status",
 ] as const;
 
-export function toCsv(rows: Record<string, string | number | null>[]): string {
-  const escape = (v: string | number | null): string => {
-    const s = v === null || v === undefined ? "" : String(v);
+export function toCsv(rows: Record<string, string | number | Date | null>[]): string {
+  const escape = (v: string | number | Date | null): string => {
+    let s =
+      v === null || v === undefined
+        ? ""
+        : v instanceof Date
+          ? `${v.getFullYear()}-${String(v.getMonth() + 1).padStart(2, "0")}-${String(v.getDate()).padStart(2, "0")}`
+          : String(v);
     if (/[;"\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
     return s;
   };
