@@ -5,7 +5,7 @@
 Курсовая работа по дисциплине «Разработка программного обеспечения», ВКЭиК, группа ПО-314, студент Колот Д. Д., руководитель Соколова Е. В., Павлодар, 2026.
 
 **Репозиторий:** https://github.com/DENDORoff/staffbase
-**Демо:** https://staffbase.de-world.net · запасной: https://staffbase-bice.vercel.app
+**Демо:** https://staffbase.de-world.net · запасной: https://staffbase-qrnwngeis-dw-8bb0.vercel.app
 **Развернуть локально за 5 минут:** `npm install` → `cp .env.example .env.local` → `node scripts/seed.mjs` → `npm run build` → `npm start` → http://localhost:3000
 
 ## Что внутри
