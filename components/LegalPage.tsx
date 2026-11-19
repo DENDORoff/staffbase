@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { PublicFooter } from "./PublicFooter";
-import { ThemeToggle } from "./ThemeToggle";
 
 export function LegalPage({ title, updated, children }: { title: string; updated: string; children: React.ReactNode }) {
   return (
@@ -13,7 +12,6 @@ export function LegalPage({ title, updated, children }: { title: string; updated
               <Logo size={30} />
               <span className="font-serif font-bold">StaffBase</span>
             </Link>
-            <ThemeToggle compact />
           </div>
         </header>
         <article className="legal mx-auto w-full max-w-4xl px-4 py-10 sm:px-6">

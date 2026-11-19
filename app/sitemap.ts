@@ -1,7 +1,7 @@
-import type { MetadataRoute } from "next";
+﻿import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://staffbase.deworld.su";
+  const base = "https://staffbase.de-world.net";
   const now = new Date();
   const publicPaths = [
     "/",
@@ -21,3 +21,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "/" ? 1 : 0.5,
   }));
 }
+

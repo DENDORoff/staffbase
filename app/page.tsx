@@ -1,12 +1,10 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import { cookies } from "next/headers";
 import { sql } from "@/lib/db";
 import { getDictionary, localeFromCookie } from "@/lib/i18n";
 import { Logo } from "@/components/Logo";
 import { Icon, type IconName } from "@/components/Icon";
 import { PublicFooter } from "@/components/PublicFooter";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { LanguageToggle } from "@/components/LanguageToggle";
 
 export const dynamic = "force-dynamic";
 
@@ -47,8 +45,6 @@ export default async function LandingPage() {
             <span className="font-serif text-xl font-bold text-text">StaffBase</span>
           </Link>
           <nav className="flex items-center gap-2 sm:gap-3" aria-label="Основная навигация">
-            <LanguageToggle />
-            <ThemeToggle compact locale={locale} />
             <Link href="/login" className="btn btn-primary">{t["landing.cta.primary"]}</Link>
           </nav>
         </div>
@@ -87,7 +83,7 @@ export default async function LandingPage() {
                   <span className="h-2.5 w-2.5 rounded-full bg-accent/80" />
                   <span className="h-2.5 w-2.5 rounded-full bg-ok/70" />
                 </div>
-                <span className="text-[10px] font-bold uppercase tracking-widest text-text-2">staffbase.deworld.su / обзор</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-text-2">staffbase.de-world.net / обзор</span>
               </div>
               <div className="grid gap-3 p-4 sm:grid-cols-3">
                 {[
@@ -177,3 +173,4 @@ export default async function LandingPage() {
     </>
   );
 }
+

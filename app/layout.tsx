@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+﻿import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { cookies } from "next/headers";
 import Script from "next/script";
@@ -28,7 +28,7 @@ const ptSerif = localFont({
   display: "swap",
 });
 
-const siteUrl = "https://staffbase.deworld.su";
+const siteUrl = "https://staffbase.de-world.net";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -83,3 +83,4 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     </html>
   );
 }
+

@@ -1,4 +1,4 @@
-import { LegalPage } from "@/components/LegalPage";
+﻿import { LegalPage } from "@/components/LegalPage";
 
 export const metadata = {
   title: "Политика конфиденциальности",
@@ -10,7 +10,7 @@ export default function PrivacyPage() {
     <LegalPage title="Политика конфиденциальности" updated="17 ноября 2026">
       <p>
         Настоящая Политика определяет порядок обработки персональных данных сотрудников ТОО «DeWorld StaffBase»
-        (далее — «Оператор») в информационной системе StaffBase (staffbase.deworld.su). Оператор руководствуется
+        (далее — «Оператор») в информационной системе StaffBase (staffbase.de-world.net). Оператор руководствуется
         Законом Республики Казахстан «О персональных данных и их защите» от 21.05.2013 № 94-V и, в части обработки
         данных граждан РФ, Федеральным законом от 27.07.2006 № 152-ФЗ «О персональных данных».
       </p>
@@ -66,3 +66,4 @@ export default function PrivacyPage() {
     </LegalPage>
   );
 }
+

@@ -5,8 +5,6 @@ import { Logo } from "@/components/Logo";
 import { getSessionUser } from "@/lib/auth";
 import { getDictionary, localeFromCookie } from "@/lib/i18n";
 import { PublicFooter } from "@/components/PublicFooter";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { LanguageToggle } from "@/components/LanguageToggle";
 import { Icon } from "@/components/Icon";
 
 export const dynamic = "force-dynamic";
@@ -39,10 +37,6 @@ export default async function LoginPage({
               <Logo size={32} />
               <span className="font-serif text-lg font-bold">StaffBase</span>
             </Link>
-            <div className="flex items-center gap-2">
-              <LanguageToggle />
-              <ThemeToggle compact locale={locale} />
-            </div>
           </div>
         </header>
 

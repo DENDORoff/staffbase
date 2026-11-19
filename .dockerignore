@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.gitignore
+.env*
+.vercel
+*.md
+scripts/schema.sql
+npm-debug.log*

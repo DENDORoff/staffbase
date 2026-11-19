@@ -1,0 +1,10 @@
+# StaffBase — локальный запуск одной командой
+# База данных берётся в Neon (DATABASE_URL в .env.local), локальная БД не нужна.
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    restart: unless-stopped

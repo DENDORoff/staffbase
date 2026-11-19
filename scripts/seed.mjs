@@ -47,9 +47,9 @@ const positions = [
 // Имя, фамилия, отчество, отдел, должность, год приёма, год рождения, зарплата
 const staff = [
   ["Колот", "Денис", "Дмитриевич", "IT", "Инженер-программист", 2024, 2003, 480000],
-  ["Нуркенов", "Серик", "Болатович", "ADM", "Директор", 2015, 1978, 950000],
-  ["Соколова", "Елена", "Викторовна", "HR", "Руководитель отдела", 2018, 1985, 620000],
-  ["Даниярова", "Динара", "Ержановна", "FIN", "Руководитель отдела", 2019, 1988, 600000],
+  ["Нуркенов", "Султан", "Болатович", "ADM", "Директор", 2015, 1978, 950000],
+  ["Соколова", "Елена", "Валерьевна", "HR", "Руководитель отдела", 2018, 1985, 620000],
+  ["Данияров", "Данияр", "Ерланович", "FIN", "Руководитель отдела", 2019, 1988, 600000],
   ["Абдрахманов", "Ерлан", "Маратович", "IT", "Руководитель отдела", 2017, 1983, 650000],
   ["Касымова", "Айгерим", "Нурлановна", "HR", "Специалист по кадрам", 2022, 1995, 380000],
   ["Токтаров", "Нурлан", "Серикович", "IT", "Системный администратор", 2020, 1990, 450000],
@@ -134,15 +134,15 @@ const toLatin = (s) => s.toLowerCase().split("").map((c) => translit[c] ?? c).jo
 
   console.log("Inserting users…");
   const password = hashPassword("StaffBase2026");
-  const adminEmp = empId["TB-0003"]; // Соколова Е. В. — кадровая служба
+  const adminEmp = empId["TB-0001"]; // Колот Д. Д. — администратор (учебная учётка)
   const managerEmp = empId["TB-0002"]; // Нуркенов С. Б. — директор
-  const employeeEmp = empId["TB-0001"]; // Колот Д. Д. — инженер-программист
+  const employeeEmp = empId["TB-0004"]; // Данияров Д. Е. — руководитель отдела
   await sql`INSERT INTO users (email, password_hash, full_name, role, employee_id) VALUES
-    ('hr@staffbase.kz', ${password}, 'Соколова Елена Викторовна', 'admin', ${adminEmp})`;
+    ('hr@staffbase.kz', ${password}, 'Колот Денис Дмитриевич', 'admin', ${adminEmp})`;
   await sql`INSERT INTO users (email, password_hash, full_name, role, employee_id) VALUES
-    ('manager@staffbase.kz', ${password}, 'Нуркенов Серик Болатович', 'manager', ${managerEmp})`;
+    ('manager@staffbase.kz', ${password}, 'Нуркенов Султан Болатович', 'manager', ${managerEmp})`;
   await sql`INSERT INTO users (email, password_hash, full_name, role, employee_id) VALUES
-    ('employee@staffbase.kz', ${password}, 'Колот Денис Дмитриевич', 'employee', ${employeeEmp})`;
+    ('employee@staffbase.kz', ${password}, 'Данияров Данияр Ерланович', 'employee', ${employeeEmp})`;
 
   console.log("Inserting leaves…");
   const leaveRows = [
