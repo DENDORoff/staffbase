@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Рисунок 3 — Алгоритм регистрации заявки на отпуск</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ffffff; font-family: "PT Sans", "Segoe UI", Arial, sans-serif; }
+  .canvas { position: relative; width: 980px; height: 1180px; background: #ffffff; border: 1px solid #e2e0d8; padding: 22px 24px; }
+  .cap { color: #55636d; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 14px; }
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+  .node { border: 1.7px solid #113a52; background: #ffffff; border-radius: 8px; padding: 8px 16px; font-size: 13px; color: #1d2a33; max-width: 440px; text-align: center; line-height: 1.35; box-shadow: 0 1px 4px rgba(17,58,82,.1); }
+  .term { border-radius: 24px; background: #113a52; color: #fff; font-weight: 700; padding: 8px 26px; }
+  .io { border-radius: 8px; background: #eef4f8; }
+  .dec { background: #fbf6ea; border-color: #a8812a; max-width: 380px; transform: rotate(0deg); }
+  .dec b { color: #a8812a; }
+  .arrow-down { width: 2px; height: 26px; background: #113a52; position: relative; }
+  .arrow-down::after { content: ""; position: absolute; left: -5px; bottom: -1px; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 9px solid #113a52; }
+  .branch-label { font-size: 11px; font-weight: 700; color: #a8812a; margin: 3px 0; }
+  .side { display: flex; align-items: center; gap: 8px; }
+  .side .note { background: #fdf0ec; border: 1.4px solid #b3402a; color: #7a2a1a; border-radius: 8px; font-size: 11.5px; padding: 6px 12px; max-width: 330px; line-height: 1.35; }
+  .side .h-line { width: 46px; height: 2px; background: #b3402a; }
+  .pair { display: flex; align-items: stretch; gap: 8px; }
+  .pair .spacer { flex: 1; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="cap">StaffBase · алгоритм оформления заявки на отпуск (POST /api/leaves)</div>
+  <div class="flow">
+    <div class="node term">Начало</div>
+    <div class="arrow-down"></div>
+    <div class="node io">Пользователь открывает раздел «Отпуска и больничные» — личный список заявок</div>
+    <div class="arrow-down"></div>
+    <div class="node">Заполняет форму: тип (отпуск / больничный), дата начала, дата окончания, комментарий</div>
+    <div class="arrow-down"></div>
+    <div class="node">POST-запрос формы на <b>/api/leaves</b> (скрытое поле sb_csrf)</div>
+    <div class="arrow-down"></div>
+    <div class="pair">
+      <div class="node dec"><b>Проверка guardMutation:</b><br>сессия активна и CSRF-токен совпал?</div>
+      <div class="side"><div class="h-line"></div><div class="note"><b>Нет</b> → 303-редирект на /login (или ?error=csrf). Запись не создаётся.</div></div>
+    </div>
+    <div class="branch-label">да</div>
+    <div class="arrow-down"></div>
+    <div class="pair">
+      <div class="node dec"><b>Серверная валидация:</b><br>ends_on ≥ starts_on; период ≤ 90 дней; тип известен; комментарий ≤ 500 символов?</div>
+      <div class="side"><div class="h-line"></div><div class="note"><b>Нет</b> → 303-редирект на /leaves?error=validation, сообщение «Проверьте даты». Запись не создаётся.</div></div>
+    </div>
+    <div class="branch-label">да</div>
+    <div class="arrow-down"></div>
+    <div class="node">INSERT INTO leaves (employee_id, type, starts_on, ends_on, status = 'pending', comment) — запрос параметризован</div>
+    <div class="arrow-down"></div>
+    <div class="node io">303-редирект на /leaves?created=1 — пользователь видит подтверждение и заявку «На рассмотрении»</div>
+    <div class="arrow-down"></div>
+    <div class="node">HR/руководитель согласует (POST /api/leaves/[id]/status). Если период включает сегодня — статус сотрудника меняется на vacation / sick_leave</div>
+    <div class="arrow-down"></div>
+    <div class="node term">Конец</div>
+  </div>
+</div>
+</body>
+</html>

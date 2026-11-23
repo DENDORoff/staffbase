@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Рисунок 1 — ER-схема базы данных StaffBase</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #ffffff; font-family: "PT Sans", "Segoe UI", Arial, sans-serif; }
+  .canvas { position: relative; width: 1240px; height: 1040px; background: #ffffff; border: 1px solid #e2e0d8; }
+  svg.wires { position: absolute; inset: 0; }
+  .table { position: absolute; background: #ffffff; border: 1.6px solid #113a52; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(17,58,82,.12); font-size: 12.5px; }
+  .table .name { background: #113a52; color: #fff; font-weight: 700; padding: 5px 10px; font-size: 13px; letter-spacing: .02em; display: flex; justify-content: space-between; align-items: center; }
+  .table .name .en { color: #c9a13b; font-size: 10px; font-weight: 400; }
+  .table table { width: 100%; border-collapse: collapse; }
+  .table td { padding: 3px 10px; border-bottom: 1px solid #eeede6; color: #1d2a33; }
+  .table tr:last-child td { border-bottom: none; }
+  .table .k { color: #a8812a; font-weight: 700; width: 34px; font-size: 10px; }
+  .table .f { color: #6b7a85; width: 118px; text-align: right; font-size: 11px; }
+  .row-pk { background: #fbf6ea; }
+  .row-fk { background: #eef4f8; }
+  .legend { position: absolute; left: 24px; bottom: 12px; font-size: 11.5px; color: #55636d; display: flex; gap: 20px; }
+  .legend b { display: inline-block; width: 26px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+  .cap { position: absolute; top: 10px; left: 24px; color: #55636d; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="cap">StaffBase · схема базы данных PostgreSQL (Neon)</div>
+  <svg class="wires" width="1240" height="1040" viewBox="0 0 1240 1040" fill="none">
+    <!-- departments -> employees -->
+    <path d="M165 262 C 175 300, 260 330, 300 356" stroke="#113a52" stroke-width="2.2"/>
+    <text x="152" y="300" font-size="13" fill="#113a52" font-weight="700">1</text>
+    <text x="272" y="322" font-size="13" fill="#113a52" font-weight="700">N</text>
+    <!-- positions -> employees -->
+    <path d="M468 262 C 468 300, 500 330, 520 356" stroke="#113a52" stroke-width="2.2"/>
+    <text x="478" y="300" font-size="13" fill="#113a52" font-weight="700">1</text>
+    <text x="496" y="326" font-size="13" fill="#113a52" font-weight="700">N</text>
+    <!-- employees -> users (horizontal) -->
+    <path d="M742 452 L 812 452" stroke="#113a52" stroke-width="2.2"/>
+    <text x="750" y="442" font-size="13" fill="#113a52" font-weight="700">1</text>
+    <text x="782" y="442" font-size="13" fill="#113a52" font-weight="700">1</text>
+    <!-- users -> sessions (vertical) -->
+    <path d="M990 572 L 990 648" stroke="#113a52" stroke-width="2.2"/>
+    <text x="1000" y="600" font-size="13" fill="#113a52" font-weight="700">1</text>
+    <text x="1000" y="638" font-size="13" fill="#113a52" font-weight="700">N</text>
+    <!-- employees -> leaves -->
+    <path d="M345 646 C 285 668, 215 690, 185 722" stroke="#113a52" stroke-width="2.2"/>
+    <text x="322" y="672" font-size="13" fill="#113a52" font-weight="700">1</text>
+    <text x="212" y="692" font-size="13" fill="#113a52" font-weight="700">N</text>
+  </svg>
+
+  <div class="table" style="left:40px; top:56px; width:250px;">
+    <div class="name">departments <span class="en">отделы</span></div>
+    <table>
+      <tr class="row-pk"><td class="k">PK</td><td>id</td><td class="f">SERIAL</td></tr>
+      <tr><td class="k">UQ</td><td>code</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k">UQ</td><td>name</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>description</td><td class="f">TEXT NULL</td></tr>
+      <tr><td class="k"></td><td>created_at</td><td class="f">TIMESTAMPTZ</td></tr>
+    </table>
+  </div>
+
+  <div class="table" style="left:343px; top:56px; width:250px;">
+    <div class="name">positions <span class="en">должности</span></div>
+    <table>
+      <tr class="row-pk"><td class="k">PK</td><td>id</td><td class="f">SERIAL</td></tr>
+      <tr><td class="k">UQ</td><td>title</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>salary_grade</td><td class="f">TEXT NULL</td></tr>
+      <tr><td class="k"></td><td>created_at</td><td class="f">TIMESTAMPTZ</td></tr>
+    </table>
+  </div>
+
+  <div class="table" style="left:760px; top:56px; width:400px;">
+    <div class="name">data_deletion_requests <span class="en">удаление ПД</span></div>
+    <table>
+      <tr class="row-pk"><td class="k">PK</td><td>id</td><td class="f">SERIAL</td></tr>
+      <tr><td class="k"></td><td>email</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>reason</td><td class="f">TEXT NULL</td></tr>
+      <tr><td class="k"></td><td>status</td><td class="f">TEXT, CHECK</td></tr>
+      <tr><td class="k"></td><td>created_at</td><td class="f">TIMESTAMPTZ</td></tr>
+    </table>
+  </div>
+
+  <div class="table" style="left:300px; top:340px; width:440px;">
+    <div class="name">employees <span class="en">сотрудники</span></div>
+    <table>
+      <tr class="row-pk"><td class="k">PK</td><td>id</td><td class="f">SERIAL</td></tr>
+      <tr><td class="k">UQ</td><td>personnel_number</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>last_name / first_name / middle_name</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr class="row-fk"><td class="k">FK</td><td>position_id → positions.id</td><td class="f">ON DELETE RESTRICT</td></tr>
+      <tr class="row-fk"><td class="k">FK</td><td>department_id → departments.id</td><td class="f">ON DELETE RESTRICT</td></tr>
+      <tr><td class="k"></td><td>hire_date / birth_date</td><td class="f">DATE, NOT NULL</td></tr>
+      <tr><td class="k">UQ</td><td>email</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>phone</td><td class="f">TEXT NULL</td></tr>
+      <tr><td class="k"></td><td>salary</td><td class="f">NUMERIC(12,2), CHECK ≥ 0</td></tr>
+      <tr><td class="k"></td><td>status</td><td class="f">TEXT, CHECK (4 значения)</td></tr>
+      <tr><td class="k"></td><td>created_at / updated_at</td><td class="f">TIMESTAMPTZ</td></tr>
+    </table>
+  </div>
+
+  <div class="table" style="left:812px; top:340px; width:348px;">
+    <div class="name">users <span class="en">учётные записи</span></div>
+    <table>
+      <tr class="row-pk"><td class="k">PK</td><td>id</td><td class="f">SERIAL</td></tr>
+      <tr><td class="k">UQ</td><td>email</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>password_hash</td><td class="f">TEXT (scrypt)</td></tr>
+      <tr><td class="k"></td><td>full_name</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>role</td><td class="f">CHECK (admin,<br>manager, employee)</td></tr>
+      <tr class="row-fk"><td class="k">FK</td><td>employee_id → employees.id (UQ)</td><td class="f">ON DELETE SET NULL</td></tr>
+      <tr><td class="k"></td><td>notify_email</td><td class="f">BOOLEAN</td></tr>
+      <tr><td class="k"></td><td>failed_attempts / locked_until</td><td class="f"></td></tr>
+      <tr><td class="k"></td><td>created_at</td><td class="f">TIMESTAMPTZ</td></tr>
+    </table>
+  </div>
+
+  <div class="table" style="left:812px; top:668px; width:348px;">
+    <div class="name">sessions <span class="en">сессии</span></div>
+    <table>
+      <tr class="row-pk"><td class="k">PK</td><td>id</td><td class="f">SERIAL</td></tr>
+      <tr class="row-fk"><td class="k">FK</td><td>user_id → users.id</td><td class="f">ON DELETE CASCADE</td></tr>
+      <tr><td class="k">UQ</td><td>token_hash</td><td class="f">TEXT (SHA-256)</td></tr>
+      <tr><td class="k"></td><td>csrf_token</td><td class="f">TEXT, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>expires_at</td><td class="f">TIMESTAMPTZ</td></tr>
+      <tr><td class="k"></td><td>created_at</td><td class="f">TIMESTAMPTZ</td></tr>
+    </table>
+  </div>
+
+  <div class="table" style="left:40px; top:722px; width:290px;">
+    <div class="name">leaves <span class="en">отпуска и больничные</span></div>
+    <table>
+      <tr class="row-pk"><td class="k">PK</td><td>id</td><td class="f">SERIAL</td></tr>
+      <tr class="row-fk"><td class="k">FK</td><td>employee_id → employees.id</td><td class="f">ON DELETE CASCADE</td></tr>
+      <tr><td class="k"></td><td>type</td><td class="f">CHECK (vacation, sick_leave)</td></tr>
+      <tr><td class="k"></td><td>starts_on / ends_on</td><td class="f">DATE, NOT NULL</td></tr>
+      <tr><td class="k"></td><td>status</td><td class="f">CHECK (pending,<br>approved, rejected)</td></tr>
+      <tr><td class="k"></td><td>comment</td><td class="f">TEXT NULL</td></tr>
+      <tr><td class="k"></td><td>created_at</td><td class="f">TIMESTAMPTZ</td></tr>
+      <tr><td class="k"></td><td>CHECK (ends_on ≥ starts_on)</td><td class="f"></td></tr>
+    </table>
+  </div>
+
+  <div class="legend">
+    <span><b style="background:#fbf6ea; border:1px solid #e3d9bd"></b>первичный ключ (PK)</span>
+    <span><b style="background:#eef4f8; border:1px solid #c3d6e2"></b>внешний ключ (FK)</span>
+    <span>UQ — уникальное значение</span>
+    <span>1, N — кратность связи</span>
+  </div>
+</div>
+</body>
+</html>
